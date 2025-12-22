@@ -11,6 +11,7 @@ const InfoCard = ({ selected }) => {
                                     fontWeight: '700', 
                                     fontSize: '20px'}}>지도를 클릭하면 정보가 표시됩니다.</S.InfoCard>
     }
+    console.log(selected)
     return (
         <div>
             <S.InfoCard>

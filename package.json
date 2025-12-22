@@ -9,10 +9,7 @@
     "@mui/system": "^7.3.6",
     "@mui/x-date-pickers": "^8.22.0",
     "@mui/x-date-pickers-pro": "^8.22.0",
-<<<<<<< HEAD
-=======
     "@portone/browser-sdk": "^0.1.1",
->>>>>>> main
     "@tanstack/react-query": "^5.90.12",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
