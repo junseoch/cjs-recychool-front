@@ -8,7 +8,7 @@ const formatDate = (date) => {
 };
 
 const RightPanel = ({ data, type, selectedDate }) => {
-  if (!data) return null
+
   const navigate = useNavigate();
   const apiType = type.toLowerCase();
 
