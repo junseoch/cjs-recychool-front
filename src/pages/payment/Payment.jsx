@@ -181,12 +181,13 @@ const Payment = () => {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
           body: JSON.stringify({
-            reserveId: reserve.id,
-            impUid,
-            merchantUid,
-            paymentType: payType,
-            extend: isExtend,
-          }),
+          reserveId: reserve.id,
+          impUid: impUid,
+          merchantUid: merchantUid,
+          paymentType: payType,
+          amount: totalPrice,   
+          extend: isExtend,
+        }),
         }
       );
 
