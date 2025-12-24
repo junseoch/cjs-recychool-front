@@ -119,18 +119,13 @@ const Payment = () => {
       }
 
       const response = await PortOne.requestPayment(paymentRequest);
+      
 
-      // 결제창 종료 / 취소
       if (!response) {
         alert("결제가 취소되었습니다.");
         return;
       }
 
-      // 결제 성공 여부 검증
-      if (response.status !== "PAID") {
-        alert("결제가 완료되지 않았습니다.");
-        return;
-      }
 
       const res = await fetch(
         `${process.env.REACT_APP_BACKEND_URL}/private/payment/complete`,
@@ -141,23 +136,32 @@ const Payment = () => {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
           body: JSON.stringify({
-            reserveId: reserve.id,
-            impUid: response.paymentId,
-            merchantUid: paymentId,
-            paymentType: payType,
-            amount: totalPrice,
-            extend: isExtend,
+          reserveId: reserve.id,
+          impUid: response.paymentId,      
+          merchantUid: paymentId,          
+          paymentType: payType,
+          amount: totalPrice,
+          extend: isExtend,
           }),
         }
       );
 
+
+      if (res.status === 409) {
+        alert("이미 처리된 결제입니다.");
+        return;
+      }
+
       if (!res.ok) {
-        alert("결제 처리에 실패했습니다.");
+        alert("결제 검증에 실패했습니다.");
         return;
       }
 
       alert("결제가 완료되었습니다.");
-      navigate(`/complete/${reserve.id}?extend=${isExtend}`);
+      navigate(`/complete/${reserve.id}?extend=${isExtend}`)
+
+
+    
     } catch (error) {
       console.error(error);
       alert("결제 중 오류가 발생했습니다.");
