@@ -1,82 +1,113 @@
 import styled from "styled-components";
-import { h3Medium, h4Bold, h4Medium, h5Bold, h5Medium, h6Bold, h6Light, h6Medium, h7Bold, h7Medium, h8Light, h8Medium } from "../../../styles/common";
+import { h3Medium } from "../../../styles/common"; // 경로에 맞춰 수정 필요
 
 const S = {};
 
-S.Body = styled.main`
-  padding: 70px 16px 90px;
+S.Page = styled.div`
+  width: 100%;
+  min-height: 100vh;
+  background-color: #fff;
 `;
 
-S.CenterWrap = styled.section`
-  max-width: 760px;
+S.CompleteWrap = styled.div`
+  width: 920px;           
   margin: 0 auto;
+  box-sizing: border-box;
+  padding: 110px 0 140px;
 `;
 
-S.Title = styled.h2`
+S.CompleteCard = styled.section`
+  width: 100%;
+`;
+
+S.CompleteTitle = styled.h1`
+  margin: 0;
   text-align: center;
-  font-size: 22px;
-  ${h4Bold}
-  margin: 0 0 15px 0;
+  ${h3Medium} 
+  color: #111;
 `;
 
-S.StateText = styled.p`
-  text-align: center;
-  margin: 18px 0 0;
+S.CompleteDivider = styled.div`
+  margin-top: 20px;
+  width: 100%;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.55);
 `;
 
-S.InfoTable = styled.table`
-  width: 640px;
-  max-width: 100%;
-  margin: 0 auto;
-  border-collapse: collapse;
-  background: #fff;
-  border-top: 2px solid #777;
 
-  th,
-  td {
-    border-bottom: 1px solid #e5e5e5ff;
-    padding: 14px 18px;
-  }
-
-  th {
-    width: 140px;
-    background: #F9FAFB;
-    text-align: center;
-    color: #444;
-  }
+S.CompleteTable = styled.div`
+  width: 100%;
 `;
 
-S.ButtonRow = styled.div`
-  margin-top: 42px;
+S.CompleteRow = styled.div`
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  min-height: 64px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+`;
+
+S.CompleteTh = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 18px;
+  font-size: 16px;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.75);
+  background: rgba(0, 0, 0, 0.04);
+  border-right: 1px solid rgba(0, 0, 0, 0.12);
+`;
+
+S.CompleteTd = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 28px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #111;
+`;
+
+/* 버튼 영역 */
+S.CompleteButtonRow = styled.div`
+  margin-top: 80px;
+  width: 100%;
   display: flex;
   justify-content: center;
-  gap: 26px;
+  gap: 48px;
 `;
 
-S.PrimaryButton = styled.button`
-  width: 260px;
-  height: 52px;
+S.CompletePrimaryButton = styled.button`
+  width: 360px;
+  height: 56px;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  cursor: pointer;
   background-color: ${({ theme }) => theme.PALETTE.primary.green.main};
   color: #fff;
-  ${h5Medium}
-  cursor: pointer;
-
 `;
 
-S.SecondaryButton = styled.button`
-  width: 260px;
-  height: 52px;
+S.CompleteSecondaryButton = styled.button`
+  width: 360px;
+  height: 56px;
   border: none;
-  border-radius: 4px;
-  background-color: ${({ theme }) => theme.PALETTE.primary.green.light};
-  color: ${({ theme }) => theme.PALETTE.neutral.black.main};
-  ${h6Medium}
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
   cursor: pointer;
-
+  background-color: #EFFBEA;
+  color: rgba(0, 0, 0, 0.75);
 `;
 
 
+S.MessageText = styled.p`
+  text-align: center;
+  margin-top: 50px;
+  font-size: 18px;
+  color: #555;
+  ${({ $error }) => $error && `color: red;`}
+`;
 
 export default S;
