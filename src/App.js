@@ -1,6 +1,5 @@
 import { RouterProvider } from 'react-router-dom';
 import router from './routes/router';
-import ReduxDebugger from './components/ReduxDebugger';
 import './App.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser, setUserStatus } from './modules/user';
@@ -77,7 +76,7 @@ function App() {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
+          <RouterProvider router={router} />
       </QueryClientProvider>
       {/* 개발 환경에서 Redux 상태 확인용 */}
       {/* {process.env.NODE_ENV === 'development' && <ReduxDebugger />} */}

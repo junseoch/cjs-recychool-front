@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Map as KMap, MapMarker, Polygon, Polyline } from 'react-kakao-maps-sdk';
 import S from './style';
 import proj4 from 'proj4';
-import { useQueries, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 proj4.defs('EPSG:5179', '+proj=tmerc +lat_0=38 +lon_0=127.5 +k=0.9996 +x_0=1000000 +y_0=2000000 +ellps=GRS80 +units=m +no_defs');
 proj4.defs('EPSG:4326', '+proj=longlat +datum=WGS84 +no_defs');
@@ -85,7 +85,6 @@ const KakaoMap = ({ schoolRing = [], onSelect }) => {
     const [outerEdges, setOuterEdges] = useState([]);
     const [selected, setSelected] = useState(null);
     const [hoverId, setHoverId] = useState(null);
-    const [modal, setModal] = useState('')
     const mapRef = useRef(null);
 
 
@@ -123,7 +122,6 @@ const KakaoMap = ({ schoolRing = [], onSelect }) => {
     const hoverSrc = '/assets/images/blue_marker.png';
     const selectedSrc = '/assets/images/blue_marker.png';
 
-    const iwContent = '<div style="padding:5px;">Hello World!</div>';
     const handleMarkerMouseOver = useCallback((id, e) => {
         e?.stopPropagation?.();
         setHoverId(id);
@@ -154,7 +152,7 @@ const KakaoMap = ({ schoolRing = [], onSelect }) => {
         return polygons
     }
 
-    const { data: polygonData, isLoading, isError, error, refetch } = useQuery({
+    const { data: polygonData } = useQuery({
         queryKey: ['polygons'],
         queryFn: getPolygons,
         staleTime: 1000 * 60 * 5,
@@ -199,7 +197,7 @@ const KakaoMap = ({ schoolRing = [], onSelect }) => {
         return schools
     }
 
-    const { data: schoolRings = [], refetch: schoolRefetch } = useQuery({
+    const { data: schoolRings = [] } = useQuery({
         queryKey: ['schools'],
         queryFn: getSchools,
         select: (raw) => {
