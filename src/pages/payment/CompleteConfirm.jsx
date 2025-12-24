@@ -14,7 +14,7 @@ const formatRange = (start, end) => {
   return `${formatKoreanDate(start)} - ${formatKoreanDate(end)}`;
 };
 
-const ENABLE_DAYS_BEFORE = 60;
+const ENABLE_DAYS_BEFORE = 7;
 
 const CompleteConfirm = () => {
   const navigate = useNavigate();
@@ -37,13 +37,7 @@ const CompleteConfirm = () => {
             },
           }
         );
-        // const res = await fetch(
-        //   `${process.env.REACT_APP_BACKEND_URL}/private/payment/page?reserveId=${reserveId}`,
-        //   {
-        //     method: "GET",
-        //     credentials: "include", // ⭐ 이 한 줄이 핵심
-        //   }
-        // );
+
 
 
         if (!res.ok) {
@@ -62,7 +56,7 @@ const CompleteConfirm = () => {
     fetchReserve();
   }, [reserveId]);
 
-  // 날짜 차이 계산(연장 버튼 활성화 판단용)
+  // 날짜 차이 계산
   const canExtend = useMemo(() => {
     if (!dto) return false;
     if (dto.reserveType !== "PARKING") return false;
@@ -78,7 +72,7 @@ const CompleteConfirm = () => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    // enableDate(종료일-7일)부터 종료일까지 활성화
+
     return today >= enable && today <= end;
   }, [dto]);
 
@@ -105,7 +99,7 @@ const CompleteConfirm = () => {
     navigate("/", { replace: true });
   };
 
-  // 연장 결제 이동(7일 전부터만)
+  // 연장 결제 이동(7일 전)
   const handleGoExtend = () => {
     if (!canExtend) {
       alert(`연장은 종료일 ${ENABLE_DAYS_BEFORE}일 전부터 가능합니다.`);

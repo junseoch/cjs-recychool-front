@@ -31,7 +31,7 @@ const Payment = () => {
   useEffect(() => {
     const fetchReserve = async () => {
       const res = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/private/payment/page?reserveId=${reserveId}`,
+        `${process.env.REACT_APP_BACKEND_URL}/private/payment/page?reserveId=${reserveId}&extend=${isExtend}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
