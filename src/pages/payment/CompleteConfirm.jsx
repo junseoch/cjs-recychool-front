@@ -14,7 +14,7 @@ const formatRange = (start, end) => {
   return `${formatKoreanDate(start)} - ${formatKoreanDate(end)}`;
 };
 
-const ENABLE_DAYS_BEFORE = 7;
+const ENABLE_DAYS_BEFORE = 60;
 
 const CompleteConfirm = () => {
   const navigate = useNavigate();
@@ -163,7 +163,6 @@ const CompleteConfirm = () => {
           <S.CompleteButtonRow>
             <S.CompletePrimaryButton
               type="button"
-              disabled={isParking ? !canExtend : false}
               onClick={() => {
                 if (isParking) {
                   handleGoExtend();
@@ -171,7 +170,7 @@ const CompleteConfirm = () => {
                   handleCancelReserve();
                 }
               }}
-            >
+>
               {leftButtonText}
             </S.CompletePrimaryButton>
 
