@@ -92,81 +92,76 @@ const Payment = () => {
     throw new Error("Unknown payType");
   };
 
+
   const handlePay = async () => {
-    try {
-      const paymentId = `payment-${Date.now()}`;
-      const { channelKey, payMethod, easyPayProvider } = getPortOnePayType();
+  try {
+    const paymentId = `payment-${Date.now()}`;
+    const { channelKey, payMethod, easyPayProvider } = getPortOnePayType();
 
-      const paymentRequest = {
-        storeId: process.env.REACT_APP_PORTONE_STORE_ID,
-        channelKey,
-        paymentId,
-        orderName:
-          reserve.reserveType === "PARKING"
-            ? "주차 예약 결제"
-            : "장소 대여 결제",
-        totalAmount: totalPrice,
-        currency: "CURRENCY_KRW",
-        payMethod,
-        customer: {
-          fullName: user.name,
-          email: user.email,
-        },
-      };
+    const paymentRequest = {
+      storeId: process.env.REACT_APP_PORTONE_STORE_ID,
+      channelKey,
+      paymentId,
+      orderName: reserve.reserveType === "PARKING" ? "주차 예약 결제" : "장소 대여 결제",
+      totalAmount: totalPrice,
+      currency: "CURRENCY_KRW",
+      payMethod,
+      customer: { fullName: user.name, email: user.email },
+    };
 
-      if (payMethod === "EASY_PAY") {
-        paymentRequest.easyPay = { easyPayProvider };
-      }
+    if (payMethod === "EASY_PAY") paymentRequest.easyPay = { easyPayProvider };
 
-      const response = await PortOne.requestPayment(paymentRequest);
-      
+    const response = await PortOne.requestPayment(paymentRequest);
 
-      if (!response) {
+        // 사용자가 창 닫음/취소
+    if (!response) {
+      alert("결제가 취소되었습니다.");
+      return;
+    }
+
+    // 실패/취소 실패한 경우 code/message
+    if (response.code || response.message) {
+      console.log("[PortOne] 결제 실패/취소:", response);
+
+      const msg = String(response.message || "");
+      if (msg.includes("사용자가 프로세스를 중단")) {
         alert("결제가 취소되었습니다.");
-        return;
+      } else {
+        alert(response.message || "결제가 취소되었습니다.");
       }
-
-
-      const res = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/private/payment/complete`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-          body: JSON.stringify({
-          reserveId: reserve.id,
-          impUid: response.paymentId,      
-          merchantUid: paymentId,          
-          paymentType: payType,
-          amount: totalPrice,
-          extend: isExtend,
-          }),
-        }
-      );
-
-
-      if (res.status === 409) {
-        alert("이미 처리된 결제입니다.");
-        return;
-      }
-
-      if (!res.ok) {
-        alert("결제 검증에 실패했습니다.");
-        return;
-      }
-
-      alert("결제가 완료되었습니다.");
-      navigate(`/complete/${reserve.id}?extend=${isExtend}`)
+      return;
+    }
 
 
     
-    } catch (error) {
-      console.error(error);
-      alert("결제 중 오류가 발생했습니다.");
-    }
-  };
+    const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/private/payment/complete`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+      body: JSON.stringify({
+        reserveId: reserve.id,
+        impUid: response.paymentId,
+        merchantUid: paymentId,
+        paymentType: payType,
+        amount: totalPrice,
+        extend: isExtend,
+      }),
+    });
+
+    if (res.status === 409) return alert("이미 처리된 결제입니다.");
+    if (!res.ok) return alert("결제 검증에 실패했습니다.");
+
+    navigate(`/complete/${reserve.id}?extend=${isExtend}`);
+  } catch (e) {
+    console.error(e);
+    alert("결제 중 오류가 발생했습니다.");
+  }
+};
+
+
+
 
   return (
     <S.Page>

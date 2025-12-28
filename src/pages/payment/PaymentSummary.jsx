@@ -2,7 +2,7 @@ import React from "react";
 import S from "./style";
 
 const PaymentSummary = ({ school, reserve, totalPrice, onClickPay }) => {
-  const purposeLabel = reserve.reserveType === "PARKING" ? "주차" : "장소";
+  const purposeLabel = reserve.reserveType === "PARKING" ? "주차예약" : "장소예약";
 
   return (
     <S.SummarySticky>

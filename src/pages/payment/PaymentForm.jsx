@@ -78,22 +78,7 @@ const PaymentForm = ({ user, reserve, payType, setPayType }) => {
         </S.PayList>
       </S.Block>
 
-      {/* 환불 규정 */}
-      <S.Block>
-        <S.BlockTitle>환불 규정</S.BlockTitle>
-        <S.BlockLine />
 
-        <S.RefundGrid>
-          <S.RefundLeft>100% 환불</S.RefundLeft>
-          <S.RefundRight>이용 2일전 취소시</S.RefundRight>
-
-          <S.RefundLeft>50% 환불</S.RefundLeft>
-          <S.RefundRight>이용 1일전 취소시</S.RefundRight>
-
-          <S.RefundLeft>취소 불가</S.RefundLeft>
-          <S.RefundRight>이용 당일</S.RefundRight>
-        </S.RefundGrid>
-      </S.Block>
     </S.LeftWrap>
   );
 };

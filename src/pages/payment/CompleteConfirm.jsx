@@ -14,7 +14,7 @@ const formatRange = (start, end) => {
   return `${formatKoreanDate(start)} - ${formatKoreanDate(end)}`;
 };
 
-const ENABLE_DAYS_BEFORE = 60;
+const ENABLE_DAYS_BEFORE = 7;
 
 const CompleteConfirm = () => {
   const navigate = useNavigate();
@@ -121,7 +121,7 @@ const CompleteConfirm = () => {
     ? formatRange(dto.startDate, dto.endDate)
     : formatKoreanDate(dto.startDate);
 
-  const leftButtonText = isParking ? "연장 하기" : "예약 취소";
+  const leftButtonText = isParking ? "연장하기" : "예약 취소";
 
   return (
     <S.Page>

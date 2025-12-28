@@ -109,6 +109,16 @@ S.PayIconImg = styled.img`
   height: 100%;
   object-fit: contain;
   display: block;
+
+  &[data-pay="toss"] {
+    transform: scale(2.3);
+  }
+
+    &[data-pay="kakao"] {
+    transform: scale(1.2);
+  }
+
+
 `;
 
 S.PayText = styled.div`
