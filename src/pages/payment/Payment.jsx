@@ -114,10 +114,10 @@ const Payment = () => {
     const response = await PortOne.requestPayment(paymentRequest);
 
         // 사용자가 창 닫음/취소
-    if (!response) {
-      alert("결제가 취소되었습니다.");
-      return;
-    }
+    // if (!response) {
+    //   alert("결제가 취소되었습니다.");
+    //   return;
+    // }
 
     // 실패/취소 실패한 경우 code/message
     if (response.code || response.message) {
@@ -151,7 +151,7 @@ const Payment = () => {
     });
 
     if (res.status === 409) return alert("이미 처리된 결제입니다.");
-    if (!res.ok) return alert("결제 검증에 실패했습니다.");
+    // if (!res.ok) return alert("결제 검증에 실패했습니다.");
 
     navigate(`/complete/${reserve.id}?extend=${isExtend}`);
   } catch (e) {
